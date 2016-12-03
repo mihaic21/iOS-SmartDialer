@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Contacts
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        if CNContactStore.authorizationStatus(for: .contacts) != CNAuthorizationStatus.authorized {
+            let contactStore = CNContactStore()
+            contactStore.requestAccess(for: .contacts, completionHandler: { (status, error) in
+                print("contact authorization status: \(status)")
+                //this logic will not work at first startup
+            })
+        }
+        
         return true
     }
 

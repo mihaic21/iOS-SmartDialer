@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PDa-qI-nFU">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Smart Dialer-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="DialerViewController" customModule="SmartDialer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +20,96 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i3v-qL-QLS" userLabel="Contacts Table View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="593"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="vdA-8p-QXc"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="bVx-2R-k1f"/>
+                                </connections>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r6E-VC-0EK" userLabel="Input Container View">
+                                <rect key="frame" x="0.0" y="627" width="375" height="40"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NBV-6p-opK" userLabel="Top Separator View">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.73333333333333328" green="0.73333333333333328" blue="0.73333333333333328" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="POW-4M-UYT"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ReS-zX-FGL" userLabel="Bottom Separator View">
+                                        <rect key="frame" x="0.0" y="39" width="375" height="1"/>
+                                        <color key="backgroundColor" red="0.73333333329999995" green="0.73333333329999995" blue="0.73333333329999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="YVM-TQ-HMa"/>
+                                        </constraints>
+                                    </view>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your text here" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="U0o-nG-cpg" userLabel="Input Text Field">
+                                        <rect key="frame" x="8" y="2" width="359" height="36"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="phonePad" keyboardAppearance="light"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="ReS-zX-FGL" firstAttribute="leading" secondItem="r6E-VC-0EK" secondAttribute="leading" id="ATP-Tc-PEh"/>
+                                    <constraint firstAttribute="trailing" secondItem="NBV-6p-opK" secondAttribute="trailing" id="NFI-rK-XMI"/>
+                                    <constraint firstAttribute="trailing" secondItem="U0o-nG-cpg" secondAttribute="trailing" constant="8" id="YQY-D1-7lg"/>
+                                    <constraint firstItem="U0o-nG-cpg" firstAttribute="top" secondItem="r6E-VC-0EK" secondAttribute="top" constant="2" id="anA-Ld-9pX"/>
+                                    <constraint firstItem="NBV-6p-opK" firstAttribute="top" secondItem="r6E-VC-0EK" secondAttribute="top" id="b1P-gD-h07"/>
+                                    <constraint firstAttribute="trailing" secondItem="ReS-zX-FGL" secondAttribute="trailing" id="maT-D9-A2H"/>
+                                    <constraint firstAttribute="height" constant="40" id="n6Z-46-fwP"/>
+                                    <constraint firstItem="U0o-nG-cpg" firstAttribute="leading" secondItem="r6E-VC-0EK" secondAttribute="leading" constant="8" id="rTG-cn-2rH"/>
+                                    <constraint firstAttribute="bottom" secondItem="U0o-nG-cpg" secondAttribute="bottom" constant="2" id="t0A-PN-1eN"/>
+                                    <constraint firstItem="NBV-6p-opK" firstAttribute="leading" secondItem="r6E-VC-0EK" secondAttribute="leading" id="tbf-vU-FAq"/>
+                                    <constraint firstAttribute="bottom" secondItem="ReS-zX-FGL" secondAttribute="bottom" id="vXW-zO-ogS"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="r6E-VC-0EK" secondAttribute="bottom" id="0gA-xU-aWF"/>
+                            <constraint firstItem="i3v-qL-QLS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="cGZ-Uf-tfi"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="i3v-qL-QLS" secondAttribute="bottom" constant="10" id="n80-FS-I9X"/>
+                            <constraint firstAttribute="trailing" secondItem="r6E-VC-0EK" secondAttribute="trailing" id="tlv-DX-3DL"/>
+                            <constraint firstItem="r6E-VC-0EK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ufi-8z-qqb"/>
+                            <constraint firstItem="i3v-qL-QLS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="wLk-ij-bbi"/>
+                            <constraint firstAttribute="trailing" secondItem="i3v-qL-QLS" secondAttribute="trailing" id="xuj-Dd-JZ0"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Smart Dialer" id="SSb-5g-z32"/>
+                    <connections>
+                        <outlet property="inputContainerBottomDistanceConstraint" destination="0gA-xU-aWF" id="aME-d7-YWc"/>
+                        <outlet property="inputTextField" destination="U0o-nG-cpg" id="aeo-7B-Atb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="964" y="36.431784107946029"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Mcv-hm-evQ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PDa-qI-nFU" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="F9C-zU-sIN">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ol4-eA-g8p"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hCp-pK-b2Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="24.800000000000001" y="36.431784107946029"/>
         </scene>
     </scenes>
 </document>

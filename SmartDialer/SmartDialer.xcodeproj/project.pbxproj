@@ -8,20 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		D2B28BE61DF2F64C009BA73B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B28BE51DF2F64C009BA73B /* AppDelegate.swift */; };
-		D2B28BE81DF2F64C009BA73B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B28BE71DF2F64C009BA73B /* ViewController.swift */; };
+		D2B28BE81DF2F64C009BA73B /* DialerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B28BE71DF2F64C009BA73B /* DialerViewController.swift */; };
 		D2B28BEB1DF2F64C009BA73B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2B28BE91DF2F64C009BA73B /* Main.storyboard */; };
 		D2B28BED1DF2F64C009BA73B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D2B28BEC1DF2F64C009BA73B /* Assets.xcassets */; };
 		D2B28BF01DF2F64C009BA73B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2B28BEE1DF2F64C009BA73B /* LaunchScreen.storyboard */; };
+		D2B28C011DF2FDC1009BA73B /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B28C001DF2FDC1009BA73B /* ContactsManager.swift */; };
+		D2B28C051DF2FE10009BA73B /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B28C041DF2FE10009BA73B /* Contact.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D2B28BE21DF2F64C009BA73B /* SmartDialer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartDialer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B28BE51DF2F64C009BA73B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D2B28BE71DF2F64C009BA73B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D2B28BE71DF2F64C009BA73B /* DialerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerViewController.swift; sourceTree = "<group>"; };
 		D2B28BEA1DF2F64C009BA73B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D2B28BEC1DF2F64C009BA73B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D2B28BEF1DF2F64C009BA73B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D2B28BF11DF2F64C009BA73B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2B28C001DF2FDC1009BA73B /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
+		D2B28C041DF2FE10009BA73B /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +58,48 @@
 		D2B28BE41DF2F64C009BA73B /* SmartDialer */ = {
 			isa = PBXGroup;
 			children = (
+				D2B28BF71DF2F85D009BA73B /* View */,
+				D2B28BF81DF2F869009BA73B /* Controller */,
+				D2B28BF91DF2F879009BA73B /* Model */,
+				D2B28C031DF2FDFD009BA73B /* Business Logic */,
 				D2B28BE51DF2F64C009BA73B /* AppDelegate.swift */,
-				D2B28BE71DF2F64C009BA73B /* ViewController.swift */,
-				D2B28BE91DF2F64C009BA73B /* Main.storyboard */,
 				D2B28BEC1DF2F64C009BA73B /* Assets.xcassets */,
 				D2B28BEE1DF2F64C009BA73B /* LaunchScreen.storyboard */,
 				D2B28BF11DF2F64C009BA73B /* Info.plist */,
 			);
 			path = SmartDialer;
+			sourceTree = "<group>";
+		};
+		D2B28BF71DF2F85D009BA73B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D2B28BE91DF2F64C009BA73B /* Main.storyboard */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		D2B28BF81DF2F869009BA73B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D2B28BE71DF2F64C009BA73B /* DialerViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		D2B28BF91DF2F879009BA73B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D2B28C041DF2FE10009BA73B /* Contact.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		D2B28C031DF2FDFD009BA73B /* Business Logic */ = {
+			isa = PBXGroup;
+			children = (
+				D2B28C001DF2FDC1009BA73B /* ContactsManager.swift */,
+			);
+			name = "Business Logic";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,7 +175,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2B28BE81DF2F64C009BA73B /* ViewController.swift in Sources */,
+				D2B28C051DF2FE10009BA73B /* Contact.swift in Sources */,
+				D2B28BE81DF2F64C009BA73B /* DialerViewController.swift in Sources */,
+				D2B28C011DF2FDC1009BA73B /* ContactsManager.swift in Sources */,
 				D2B28BE61DF2F64C009BA73B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
