@@ -34,7 +34,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK:- UITableViewDatasource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "contactsCell")
         let contact = ContactsManager.sharedInstance.contacts[indexPath.row]
         
         cell.textLabel?.text = contact.name

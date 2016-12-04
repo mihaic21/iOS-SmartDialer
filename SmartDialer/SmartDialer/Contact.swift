@@ -32,8 +32,9 @@ class Contact: NSObject {
         for label in cnContact.phoneNumbers {
             let number = label.value.stringValue
             
-            if number.characters.count > 0 && label.label == CNLabelPhoneNumberMain {
+            if number.characters.count > 0 {
                 self.phoneNumber = label.value.stringValue
+                break
             }
         }
         

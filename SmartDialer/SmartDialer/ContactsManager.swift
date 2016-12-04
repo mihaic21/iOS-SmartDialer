@@ -15,19 +15,20 @@ class ContactsManager: NSObject {
     private override init() {
         super.init()
         
-        self.fetchContacts()
+        self.fetchAllContacts()
     }
     
     //MARK:- Public
     
     func contactsWithMatchingString(searchTerm: String) -> [Contact] {
         
+        
         return []
     }
     
     //MARK:- Private
     
-    private func fetchContacts() {
+    private func fetchAllContacts() {
         if CNContactStore.authorizationStatus(for: .contacts) != CNAuthorizationStatus.authorized {
             return
         }
