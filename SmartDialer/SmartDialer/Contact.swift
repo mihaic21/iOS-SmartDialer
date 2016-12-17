@@ -9,35 +9,50 @@
 import Contacts
 
 class Contact: NSObject {
-    private(set) var name: String
-    private(set) var phoneNumber: String
+    private(set) var givenName: String
+    private(set) var middleName: String
+    private(set) var familyName: String
+    private(set) var nickname: String
     
-    init(name: String, phoneNumber: String) {
-        self.name = name
-        self.phoneNumber = phoneNumber
-        
-        super.init()
+    private(set) var phoneNumbers: [String]
+    
+    var displayName: String {
+        get {
+            let names = [self.givenName, self.middleName, self.familyName]
+            var finalName = ""
+            
+            for name in names {
+                if name.characters.count > 0 {
+                    finalName += "\(name) "
+                }
+            }
+            
+            if self.nickname.characters.count > 0 {
+                finalName += "\"\(self.nickname)\""
+            } else {
+                finalName.characters.removeLast()   //last character is a white space
+            }
+            
+            return finalName
+        }
     }
     
     init(fromCNContact cnContact: CNContact) {
-        self.name = ""
-        self.phoneNumber = ""
+        self.givenName = cnContact.givenName
+        self.middleName = cnContact.middleName
+        self.familyName = cnContact.familyName
+        self.nickname = cnContact.nickname
         
-        let names = [cnContact.givenName, cnContact.middleName, cnContact.familyName]
-        
-        for name in names {
-            self.name += "\(name) "
-        }
+        self.phoneNumbers = []
         
         for label in cnContact.phoneNumbers {
             let number = label.value.stringValue
             
             if number.characters.count > 0 {
-                self.phoneNumber = label.value.stringValue
-                break
+                self.phoneNumbers.append(number)
             }
         }
         
         super.init()
-    }
+    }    
 }

@@ -16,13 +16,13 @@ class ContactsManager: NSObject {
         super.init()
         
         self.fetchAllContacts()
+        //TODO: Default order of the contacts
     }
     
     //MARK:- Public
     
     func contactsWithMatchingString(searchTerm: String) -> [Contact] {
-        
-        
+        // Perform search on background thread
         return []
     }
     
@@ -57,18 +57,5 @@ class ContactsManager: NSObject {
             let contact =  Contact(fromCNContact: cnContact)
             self.contacts.append(contact)
         }
-    }
-    
-    //MARK:- Testing
-    
-    private func mockFetchContacts() {
-        var contact = Contact(name: "name", phoneNumber: "081274")
-        self.contacts.append(contact)
-        
-        contact = Contact(name: "name1", phoneNumber: "42131")
-        self.contacts.append(contact)
-        
-        contact = Contact(name: "name2", phoneNumber: "21458")
-        self.contacts.append(contact)
     }
 }
