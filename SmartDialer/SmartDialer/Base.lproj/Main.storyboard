@@ -51,6 +51,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" keyboardType="phonePad" keyboardAppearance="light"/>
+                                        <connections>
+                                            <action selector="textFieldTextDidChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="E15-j2-YGh"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -85,6 +88,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Smart Dialer" id="SSb-5g-z32"/>
                     <connections>
+                        <outlet property="contactsTableView" destination="i3v-qL-QLS" id="FgO-ut-Ebo"/>
                         <outlet property="inputContainerBottomDistanceConstraint" destination="0gA-xU-aWF" id="aME-d7-YWc"/>
                         <outlet property="inputTextField" destination="U0o-nG-cpg" id="aeo-7B-Atb"/>
                     </connections>

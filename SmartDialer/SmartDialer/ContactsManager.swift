@@ -15,26 +15,27 @@ class ContactsManager: NSObject {
     private override init() {
         super.init()
         
-        self.fetchContacts()
-        //TODO: Default order of the contacts
+        self.fetchAllContacts()
     }
     
     //MARK:- Public
     
-    func contactsWithMatchingString(searchTerm: String) -> [Contact] {
-        // Perform search on background thread
-        return []
-    }
-    
-    func fetchContacts() {
-        //TODO: Handle contacts permission inside this class
-        if CNContactStore.authorizationStatus(for: .contacts) != CNAuthorizationStatus.authorized {
-            let contactStore = CNContactStore()
-            contactStore.requestAccess(for: .contacts, completionHandler: { (status, error) in
-                self.fetchAllContacts()
-            })
-        } else {
-            self.fetchAllContacts()
+    func contactsWithMatchingString(searchTerm: String, completionBlock block: @escaping ([Contact]) -> ()) {
+        DispatchQueue.global(qos: .background).async {
+            //match searchTerm with characters
+            //matching should be case insensitive
+            
+            var filteredContacts: [Contact] = []
+            
+            for contact in self.contacts {
+                if contact.displayName.contains(searchTerm) {   //temporary check
+                    filteredContacts.append(contact)
+                }
+                
+            }
+            DispatchQueue.main.async {
+                block(filteredContacts)
+            }
         }
     }
     

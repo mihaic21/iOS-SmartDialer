@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Contacts
 
 class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var inputContainerBottomDistanceConstraint: NSLayoutConstraint!
     @IBOutlet weak var inputTextField: UITextField!
+    @IBOutlet weak var contactsTableView: UITableView!
     
     private var datasource: [Contact] = []
     
@@ -19,7 +21,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         
         self.inputTextField.becomeFirstResponder()
-        self.datasource = ContactsManager.sharedInstance.contacts
+        self.loadContacts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,6 +34,25 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         NotificationCenter.default.removeObserver(self)
         
         super.viewWillDisappear(animated)
+    }
+    
+    //MARK:- Contacts permissions
+    
+    private func loadContacts() {
+        if CNContactStore.authorizationStatus(for: .contacts) != CNAuthorizationStatus.authorized {
+            //TODO: show UI for contacts permissions
+            
+            let contactStore = CNContactStore()
+            contactStore.requestAccess(for: .contacts, completionHandler: { (status, error) in
+                if status {
+                    //update UI
+                    self.datasource = ContactsManager.sharedInstance.contacts
+                    self.contactsTableView.reloadData()
+                }
+            })
+        } else {
+            self.datasource = ContactsManager.sharedInstance.contacts
+        }
     }
     
     //MARK:- UITableViewDatasource
@@ -59,6 +80,22 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.inputTextField.resignFirstResponder()
+    }
+    
+    //MARK:- UITextFieldDelegate
+    
+    @IBAction func textFieldTextDidChanged(_ sender: UITextField) {
+        if let searchTerm = sender.text {
+            if searchTerm == "" {
+                self.datasource = ContactsManager.sharedInstance.contacts
+                self.contactsTableView.reloadData()
+            } else {
+                ContactsManager.sharedInstance.contactsWithMatchingString(searchTerm: searchTerm , completionBlock: { (contacts) in
+                    self.datasource = contacts
+                    self.contactsTableView.reloadData()
+                })
+            }
+        }
     }
     
     //MARK:- Keyboard Notifications
