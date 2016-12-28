@@ -15,7 +15,7 @@ class ContactsManager: NSObject {
     private override init() {
         super.init()
         
-        self.fetchAllContacts()
+        self.fetchContacts()
         //TODO: Default order of the contacts
     }
     
@@ -24,6 +24,18 @@ class ContactsManager: NSObject {
     func contactsWithMatchingString(searchTerm: String) -> [Contact] {
         // Perform search on background thread
         return []
+    }
+    
+    func fetchContacts() {
+        //TODO: Handle contacts permission inside this class
+        if CNContactStore.authorizationStatus(for: .contacts) != CNAuthorizationStatus.authorized {
+            let contactStore = CNContactStore()
+            contactStore.requestAccess(for: .contacts, completionHandler: { (status, error) in
+                self.fetchAllContacts()
+            })
+        } else {
+            self.fetchAllContacts()
+        }
     }
     
     //MARK:- Private
@@ -53,9 +65,24 @@ class ContactsManager: NSObject {
             return
         }
         
+        var contacts: [Contact] = []
+        
         for cnContact in cnContacts {
             let contact =  Contact(fromCNContact: cnContact)
-            self.contacts.append(contact)
+            contacts.append(contact)
         }
+        
+        self.contacts = contacts.sorted(by: { (firstContact, secondContact) -> Bool in
+            if firstContact.givenName != secondContact.givenName {
+                return firstContact.givenName < secondContact.givenName
+            }
+            if firstContact.middleName != secondContact.middleName {
+                return firstContact.middleName < secondContact.middleName
+            }
+            if firstContact.familyName != secondContact.familyName {
+                return firstContact.familyName < secondContact.familyName
+            }
+            return firstContact.nickname < secondContact.nickname
+        })
     }
 }

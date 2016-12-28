@@ -17,14 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        if CNContactStore.authorizationStatus(for: .contacts) != CNAuthorizationStatus.authorized {
-            let contactStore = CNContactStore()
-            contactStore.requestAccess(for: .contacts, completionHandler: { (status, error) in
-                print("contact authorization status: \(status)")
-                //this logic will not work at first startup
-            })
-        }
-        
         return true
     }
 
