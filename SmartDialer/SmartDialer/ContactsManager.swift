@@ -25,14 +25,38 @@ class ContactsManager: NSObject {
             //match searchTerm with characters
             //matching should be case insensitive
             
+            var regex = "^"
+            
+            for digit in searchTerm.characters {
+                let matches = self.possibleMatchedCharactersForDigit(digit: digit)
+                
+                if matches.count > 0 {
+                    var digitValues = "["
+                    
+                    for match in matches {
+                        digitValues += "\(match)"
+                    }
+                    digitValues += "]"
+                    regex += digitValues
+                }
+            }
+            
             var filteredContacts: [Contact] = []
             
             for contact in self.contacts {
-                if contact.displayName.contains(searchTerm) {   //temporary check
-                    filteredContacts.append(contact)
-                }
+                // apply regex on each name
+                let displayName = contact.displayName.replacingOccurrences(of: " ", with: "")   //if checking for the full display name, do not take into account the spaces
+                let names = [contact.givenName, contact.middleName, contact.familyName, contact.nickname, displayName]
                 
+                for name in names {
+                    if name =~ regex {  //name matches regex
+                        filteredContacts.append(contact)
+                        break
+                    }
+                }
             }
+            
+            //best match is with displayName; move up the list those matches
             DispatchQueue.main.async {
                 block(filteredContacts)
             }
@@ -86,4 +110,36 @@ class ContactsManager: NSObject {
             return firstContact.nickname < secondContact.nickname
         })
     }
+    
+    private func possibleMatchedCharactersForDigit(digit: Character) -> [Character] {
+        switch digit {
+        case "1":
+            return ["1"]
+        case "2":
+            return ["2", "a", "A", "b", "B", "c", "C"]
+        case "3":
+            return ["3", "d", "D", "e", "E", "f", "F"]
+        case "4":
+            return ["4", "g", "G", "h", "H", "i", "I"]
+        case "5":
+            return ["5", "j", "J", "k", "K", "l", "L"]
+        case "6":
+            return ["6", "m", "M", "n", "N", "o", "O"]
+        case "7":
+            return ["7", "p", "P", "q", "Q", "r", "R", "s", "S"]
+        case "8":
+            return ["8", "t", "T", "u", "U", "v", "V"]
+        case "9":
+            return ["9", "w", "W", "x", "X", "y", "Y", "z", "Z"]
+        case "0":
+            return ["0", "+"]
+        default:
+            return []
+        }
+    }
+}
+
+infix operator =~
+func =~(string: String, regex: String) -> Bool {
+    return (string.range(of: regex, options: .regularExpression, range: nil, locale: nil) != nil)
 }
