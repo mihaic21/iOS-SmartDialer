@@ -38,6 +38,9 @@ class ContactsManager: NSObject {
                     }
                     digitValues += "]"
                     regex += digitValues
+                } else {
+                    regex += "\\"
+                    regex += "\(digit)"
                 }
             }
             
@@ -54,6 +57,7 @@ class ContactsManager: NSObject {
                         break
                     }
                 }
+                //if name is not matched, look inside the phone numbers; you can search by the search term with "contains"
             }
             
             //best match is with displayName; move up the list those matches
