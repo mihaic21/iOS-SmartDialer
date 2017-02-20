@@ -30,6 +30,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForegroundNotification(notification:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -101,7 +102,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    //MARK:- Keyboard Notifications
+    //MARK:- Notifications
     
     func keyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
@@ -122,6 +123,13 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
                            animations: { self.view.layoutIfNeeded() },
                            completion: nil)
         }
+    }
+    
+    func willEnterForegroundNotification(notification: NSNotification) {
+        self.inputTextField.text = ""
+        self.datasource = ContactsManager.sharedInstance.contacts
+        self.contactsTableView.reloadData()
+        self.contactsTableView.contentOffset = CGPoint()
     }
     
     //MARK:- Actions
