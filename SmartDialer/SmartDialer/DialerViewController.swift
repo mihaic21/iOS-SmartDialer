@@ -131,7 +131,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let phoneCallURL: URL = URL(string: "tel://\(self.stripPhoneNumber(phoneNumber: phoneNumber))") {
             if (UIApplication.shared.canOpenURL(phoneCallURL)) {
                 UIApplication.shared.open(phoneCallURL, options: [:], completionHandler: { (success) in
-                    
+                    RecentCallsManager.sharedInstance.incrementCounter(phoneNumber: phoneNumber)
                 });
             }
         }
