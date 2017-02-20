@@ -68,7 +68,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         cell.contactImageView.image = contact.image ?? UIImage(named: kDefaultContactImageName)
         cell.nameLabel.text = contact.displayName
         cell.phoneLabel.text = contact.phoneNumbers.first
-        cell.dateLabel.text = ""
+        cell.dateLabel.text = "15:24,\nToday"
         
         return cell
     }
@@ -124,7 +124,24 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    //MARK:- Utils
+    //MARK:- Actions
+    
+    @IBAction func callButtonPressed(_ sender: Any) {
+        guard let phoneNumber = self.inputTextField.text else {
+            return
+        }
+        
+        if phoneNumber.characters.count > 0 {
+            if self.datasource.count == 1 {
+                //TODO: choose appropriate phone number
+                if let contactNumber = self.datasource.first!.phoneNumbers.first {
+                    self.callNumber(phoneNumber: contactNumber)
+                }
+            } else {
+                self.callNumber(phoneNumber: phoneNumber)
+            }
+        }
+    }
     
     private func callNumber(phoneNumber: String) {
         if let phoneCallURL: URL = URL(string: "tel://\(self.stripPhoneNumber(phoneNumber: phoneNumber))") {
@@ -135,6 +152,8 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
+    
+    //MARK:- Utils
     
     private func stripPhoneNumber(phoneNumber: String) -> String {
         let pattern = "[^+0-9]"
