@@ -53,8 +53,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Today, 23 March" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31l-BV-VM4" userLabel="Date Label">
-                                                    <rect key="frame" x="246.5" y="12" width="120.5" height="19.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Today, 23 March" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31l-BV-VM4" userLabel="Date Label">
+                                                    <rect key="frame" x="246.5" y="0.0" width="120.5" height="43.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -62,6 +62,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ryb-7J-2cV" firstAttribute="width" secondItem="3ol-Wc-5jg" secondAttribute="width" id="0SI-y2-xNq"/>
+                                                <constraint firstItem="31l-BV-VM4" firstAttribute="top" secondItem="Jz5-lL-jWP" secondAttribute="top" id="1xi-oG-Db4"/>
                                                 <constraint firstItem="31l-BV-VM4" firstAttribute="centerY" secondItem="Jz5-lL-jWP" secondAttribute="centerY" id="2SP-A6-nz0"/>
                                                 <constraint firstAttribute="bottom" secondItem="Rlg-MX-RZH" secondAttribute="bottom" id="Fe1-4z-bGu"/>
                                                 <constraint firstItem="ryb-7J-2cV" firstAttribute="top" secondItem="3ol-Wc-5jg" secondAttribute="bottom" id="HTT-op-txf"/>
