@@ -29,7 +29,6 @@ class ContactsManager: NSObject {
         
         DispatchQueue.global(qos: .background).async {
             //match searchTerm with characters
-            //matching is be case insensitive
             
             var regex = "^"
             
@@ -72,6 +71,7 @@ class ContactsManager: NSObject {
                     }
                 }
                 
+                //TODO: Look inside phone numbers
                 //if name is not matched, look inside the phone numbers; you can search by the search term with "contains"
             }
             

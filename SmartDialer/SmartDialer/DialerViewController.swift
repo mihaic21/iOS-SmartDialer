@@ -82,6 +82,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //TODO: Choose which number to call
         self.callNumber(phoneNumber: self.datasource[indexPath.row].phoneNumbers.first!)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
