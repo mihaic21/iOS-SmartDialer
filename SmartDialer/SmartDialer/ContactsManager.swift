@@ -27,7 +27,7 @@ class ContactsManager: NSObject {
             return
         }
         
-        DispatchQueue.global(qos: .background).async {
+        DispatchQueue.global(qos: .background).sync {
             //match searchTerm with characters
             
             var regex = "^"
