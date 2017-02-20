@@ -9,6 +9,8 @@
 import UIKit
 import Contacts
 
+let kDefaultContactImageName = "default_contact"
+
 class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var inputContainerBottomDistanceConstraint: NSLayoutConstraint!
@@ -63,7 +65,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactsCell") as! ContactsTableViewCell
         let contact = self.datasource[indexPath.row]
         
-        cell.contactImageView.image = contact.image
+        cell.contactImageView.image = contact.image ?? UIImage(named: kDefaultContactImageName)
         cell.nameLabel.text = contact.displayName
         cell.phoneLabel.text = contact.phoneNumbers.first
         cell.dateLabel.text = ""
@@ -90,15 +92,11 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBAction func textFieldTextDidChanged(_ sender: UITextField) {
         if let searchTerm = sender.text {
-            if searchTerm == "" {
-                self.datasource = ContactsManager.sharedInstance.contacts
+            ContactsManager.sharedInstance.contactsWithMatchingString(searchTerm: searchTerm , completionBlock: { (contacts) in
+                self.datasource = contacts
                 self.contactsTableView.reloadData()
-            } else {
-                ContactsManager.sharedInstance.contactsWithMatchingString(searchTerm: searchTerm , completionBlock: { (contacts) in
-                    self.datasource = contacts
-                    self.contactsTableView.reloadData()
-                })
-            }
+                self.contactsTableView.setContentOffset(CGPoint(), animated: true)
+            })
         }
     }
     

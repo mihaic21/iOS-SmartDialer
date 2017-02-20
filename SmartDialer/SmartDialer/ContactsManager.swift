@@ -21,6 +21,12 @@ class ContactsManager: NSObject {
     //MARK:- Public
     
     func contactsWithMatchingString(searchTerm: String, completionBlock block: @escaping ([Contact]) -> ()) {
+        if searchTerm == "" {
+            block(self.contacts)
+            
+            return
+        }
+        
         DispatchQueue.global(qos: .background).async {
             //match searchTerm with characters
             //matching is be case insensitive
