@@ -46,8 +46,10 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             contactStore.requestAccess(for: .contacts, completionHandler: { (status, error) in
                 if status {
                     //update UI
-                    self.datasource = ContactsManager.sharedInstance.contacts
-                    self.contactsTableView.reloadData()
+                    self.datasource = ContactsManager.sharedInstance.fetchAndGetContacts()
+                    DispatchQueue.main.async {
+                        self.contactsTableView.reloadData()
+                    }
                 }
             })
         } else {

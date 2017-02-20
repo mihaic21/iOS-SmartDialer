@@ -68,6 +68,12 @@ class ContactsManager: NSObject {
         }
     }
     
+    public func fetchAndGetContacts() -> [Contact] {
+        self.fetchAllContacts()
+        
+        return self.contacts
+    }
+    
     //MARK:- Private
     
     private func fetchAllContacts() {
