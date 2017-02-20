@@ -118,6 +118,12 @@ class ContactsManager: NSObject {
         }
         
         self.contacts = contacts.sorted(by: { (firstContact, secondContact) -> Bool in
+            if firstContact.callCount != secondContact.callCount {
+                return firstContact.callCount > secondContact.callCount
+            }
+//            if firstContact.lastCallDate != secondContact.lastCallDate {    //double check this
+//                return firstContact.lastCallDate < secondContact.lastCallDate   //and this
+//            }
             if firstContact.givenName != secondContact.givenName {
                 return firstContact.givenName < secondContact.givenName
             }

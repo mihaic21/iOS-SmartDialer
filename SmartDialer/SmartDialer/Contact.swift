@@ -15,6 +15,8 @@ class Contact: NSObject {
     private(set) var familyName: String
     private(set) var nickname: String
     private(set) var image: UIImage?
+    public var lastCallDate: Date?
+    public var callCount: Int = 0
     
     private(set) var phoneNumbers: [String]
     
