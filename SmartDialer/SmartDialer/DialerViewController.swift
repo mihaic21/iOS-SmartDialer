@@ -58,11 +58,13 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     //MARK:- UITableViewDatasource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "contactsCell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "contactsCell") as! ContactsTableViewCell
         let contact = self.datasource[indexPath.row]
         
-        cell.textLabel?.text = contact.displayName
-        cell.detailTextLabel?.text = contact.phoneNumbers.first
+        cell.contactImageView.image = contact.image
+        cell.nameLabel.text = contact.displayName
+        cell.phoneLabel.text = contact.phoneNumbers.first
+        cell.dateLabel.text = ""
         
         return cell
     }

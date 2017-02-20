@@ -23,7 +23,7 @@ class ContactsManager: NSObject {
     func contactsWithMatchingString(searchTerm: String, completionBlock block: @escaping ([Contact]) -> ()) {
         DispatchQueue.global(qos: .background).async {
             //match searchTerm with characters
-            //matching should be case insensitive
+            //matching is be case insensitive
             
             var regex = "^"
             
@@ -39,7 +39,8 @@ class ContactsManager: NSObject {
                     digitValues += "]"
                     regex += digitValues
                 } else {
-                    regex += "\\"
+                    regex += "\\"   //this is always written twice; check how to avoid
+                    //check if inserted character is a special one. if it's not, do NOT add an escape before it
                     regex += "\(digit)"
                 }
             }

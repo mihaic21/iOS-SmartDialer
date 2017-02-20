@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PDa-qI-nFU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PDa-qI-nFU">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -24,6 +25,65 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i3v-qL-QLS" userLabel="Contacts Table View">
                                 <rect key="frame" x="0.0" y="64" width="375" height="563"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactsCell" id="Dkt-bn-GrB" customClass="ContactsTableViewCell" customModule="SmartDialer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dkt-bn-GrB" id="Jz5-lL-jWP">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rlg-MX-RZH">
+                                                    <rect key="frame" x="0.0" y="0.0" width="43.5" height="43.5"/>
+                                                    <color key="backgroundColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="Rlg-MX-RZH" secondAttribute="height" multiplier="1:1" id="bXg-aU-gQE"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="bottomLeft" text="John Appleseed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ol-Wc-5jg" userLabel="Name Label">
+                                                    <rect key="frame" x="51.5" y="0.0" width="187" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" text="0766529472" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ryb-7J-2cV" userLabel="Phone Label">
+                                                    <rect key="frame" x="51.5" y="22" width="187" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Today, 23 March" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31l-BV-VM4" userLabel="Date Label">
+                                                    <rect key="frame" x="246.5" y="12" width="120.5" height="19.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ryb-7J-2cV" firstAttribute="width" secondItem="3ol-Wc-5jg" secondAttribute="width" id="0SI-y2-xNq"/>
+                                                <constraint firstItem="31l-BV-VM4" firstAttribute="centerY" secondItem="Jz5-lL-jWP" secondAttribute="centerY" id="2SP-A6-nz0"/>
+                                                <constraint firstAttribute="bottom" secondItem="Rlg-MX-RZH" secondAttribute="bottom" id="Fe1-4z-bGu"/>
+                                                <constraint firstItem="ryb-7J-2cV" firstAttribute="top" secondItem="3ol-Wc-5jg" secondAttribute="bottom" id="HTT-op-txf"/>
+                                                <constraint firstItem="31l-BV-VM4" firstAttribute="leading" secondItem="ryb-7J-2cV" secondAttribute="trailing" constant="8" id="NTN-f7-lLe"/>
+                                                <constraint firstItem="Rlg-MX-RZH" firstAttribute="leading" secondItem="Jz5-lL-jWP" secondAttribute="leading" id="O9h-d3-Yya"/>
+                                                <constraint firstItem="Rlg-MX-RZH" firstAttribute="top" secondItem="Jz5-lL-jWP" secondAttribute="top" id="Q52-Zc-jpI"/>
+                                                <constraint firstItem="3ol-Wc-5jg" firstAttribute="height" secondItem="ryb-7J-2cV" secondAttribute="height" id="Sdu-Cy-gk8"/>
+                                                <constraint firstAttribute="trailing" secondItem="31l-BV-VM4" secondAttribute="trailing" constant="8" id="YBU-Yw-Efn"/>
+                                                <constraint firstItem="ryb-7J-2cV" firstAttribute="leading" secondItem="3ol-Wc-5jg" secondAttribute="leading" id="hvd-g2-6Hb"/>
+                                                <constraint firstItem="3ol-Wc-5jg" firstAttribute="top" secondItem="Jz5-lL-jWP" secondAttribute="top" id="klu-Ye-Dxb"/>
+                                                <constraint firstAttribute="bottom" secondItem="ryb-7J-2cV" secondAttribute="bottom" id="mtW-SH-f9E"/>
+                                                <constraint firstItem="3ol-Wc-5jg" firstAttribute="leading" secondItem="Rlg-MX-RZH" secondAttribute="trailing" constant="8" id="oqa-pL-bqp"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="contactImageView" destination="Rlg-MX-RZH" id="k8k-85-lNP"/>
+                                            <outlet property="dateLabel" destination="31l-BV-VM4" id="rlr-Ob-ZQ0"/>
+                                            <outlet property="nameLabel" destination="3ol-Wc-5jg" id="2jx-AG-mF1"/>
+                                            <outlet property="phoneLabel" destination="ryb-7J-2cV" id="bA3-i9-ICb"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="vdA-8p-QXc"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="bVx-2R-k1f"/>
@@ -46,10 +106,9 @@
                                             <constraint firstAttribute="height" constant="1" id="YVM-TQ-HMa"/>
                                         </constraints>
                                     </view>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter your text here" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="U0o-nG-cpg" userLabel="Input Text Field">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="Search for contacts here" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="U0o-nG-cpg" userLabel="Input Text Field">
                                         <rect key="frame" x="8" y="2" width="359" height="36"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <attributedString key="attributedText"/>
                                         <textInputTraits key="textInputTraits" keyboardType="phonePad" keyboardAppearance="light"/>
                                         <connections>
                                             <action selector="textFieldTextDidChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="E15-j2-YGh"/>

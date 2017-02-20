@@ -7,12 +7,14 @@
 //
 
 import Contacts
+import UIKit
 
 class Contact: NSObject {
     private(set) var givenName: String
     private(set) var middleName: String
     private(set) var familyName: String
     private(set) var nickname: String
+    private(set) var image: UIImage?
     
     private(set) var phoneNumbers: [String]
     
@@ -42,6 +44,10 @@ class Contact: NSObject {
         self.middleName = cnContact.middleName
         self.familyName = cnContact.familyName
         self.nickname = cnContact.nickname
+        
+        if let imageData = cnContact.thumbnailImageData {
+            self.image = UIImage(data: imageData)
+        }
         
         self.phoneNumbers = []
         
