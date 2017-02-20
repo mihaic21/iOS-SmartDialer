@@ -38,7 +38,7 @@ class ContactsManager: NSObject {
                     }
                     digitValues += "]"
                     regex += digitValues
-                } else {
+                } else {    //special characters
                     regex += "\\"   //this is always written twice; check how to avoid
                     //check if inserted character is a special one. if it's not, do NOT add an escape before it
                     regex += "\(digit)"
@@ -46,22 +46,31 @@ class ContactsManager: NSObject {
             }
             
             var filteredContacts: [Contact] = []
+            var filteredLowMatchContacts: [Contact] = []    //any contact that is not matched with displayName is a lower match
             
             for contact in self.contacts {
                 // apply regex on each name
                 let displayName = contact.displayName.replacingOccurrences(of: " ", with: "")   //if checking for the full display name, do not take into account the spaces
-                let names = [contact.givenName, contact.middleName, contact.familyName, contact.nickname, displayName]
+                
+                if displayName =~ regex {
+                    filteredContacts.append(contact)
+                    continue
+                }
+                
+                let names = [contact.givenName, contact.middleName, contact.familyName, contact.nickname]
                 
                 for name in names {
                     if name =~ regex {  //name matches regex
-                        filteredContacts.append(contact)
+                        filteredLowMatchContacts.append(contact)
                         break
                     }
                 }
+                
                 //if name is not matched, look inside the phone numbers; you can search by the search term with "contains"
             }
             
-            //best match is with displayName; move up the list those matches
+            filteredContacts.append(contentsOf: filteredLowMatchContacts)
+            
             DispatchQueue.main.async {
                 block(filteredContacts)
             }
