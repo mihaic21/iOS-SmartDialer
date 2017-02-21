@@ -15,10 +15,12 @@ class Contact: NSObject {
     private(set) var familyName: String
     private(set) var nickname: String
     private(set) var image: UIImage?
+    
     public var lastCallDate: Date?
     public var callCount: Int = 0
     
-    private(set) var phoneNumbers: [String]
+    /// The phone numbers are ordered by last call date; the first element is the last one called.
+    public var orderedPhoneNumbers: [(label: String, number: String)]
     
     var displayName: String {
         get {
@@ -51,13 +53,15 @@ class Contact: NSObject {
             self.image = UIImage(data: imageData)
         }
         
-        self.phoneNumbers = []
+        self.orderedPhoneNumbers = []
         
-        for label in cnContact.phoneNumbers {
-            let number = label.value.stringValue
+        for phoneNumber in cnContact.phoneNumbers {
+            let number = phoneNumber.value.stringValue
             
-            if number.characters.count > 0 {
-                self.phoneNumbers.append(number)
+            if let label = phoneNumber.label {
+                if number.characters.count > 0 {
+                    self.orderedPhoneNumbers.append((label, number))
+                }
             }
         }
         

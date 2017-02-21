@@ -28,14 +28,14 @@ class RecentCallsManager: NSObject {
     
     //MARK:- Public
     
-    public func incrementCounter(phoneNumber: String) {
+    public func incrementCounterFor(phoneNumber: String, withDate date: Date) {
         DispatchQueue.global(qos: .background).async {
             var alreadyExists = false
             
             for callCounter in self.callCounters {
                 if callCounter.phoneNumber == phoneNumber {
                     callCounter.callCount += 1
-                    callCounter.lastCallDate = NSDate()
+                    callCounter.lastCallDate = date as NSDate?
                     
                     alreadyExists = true
                     break
@@ -47,12 +47,30 @@ class RecentCallsManager: NSObject {
                 let callCounter = CallCounter(context: context)
                 callCounter.phoneNumber = phoneNumber
                 callCounter.callCount = 1
-                callCounter.lastCallDate = NSDate()
+                callCounter.lastCallDate = date as NSDate?
                 context.insert(callCounter)
             }
             
             self.saveContext()
         }
+    }
+    
+    public func callCountAndLastDateFor(phoneNumber: String) -> (callCount: Int, lastCallDate: Date?) {
+        let fetchRequest = NSFetchRequest<CallCounter>(entityName: "CallCounter")
+        fetchRequest.predicate = NSPredicate(format: "phoneNumber == %@", phoneNumber)
+        
+        var result: (callCount: Int, lastCallDate: Date?) = (0, nil)
+        
+        do {
+            if let callCounter = try self.persistentContainer.viewContext.fetch(fetchRequest).first {
+                result.callCount = Int(callCounter.callCount)
+                result.lastCallDate = callCounter.lastCallDate as Date?
+            }
+        } catch {
+            
+        }
+        
+        return result
     }
     
     //MARK:- Private
@@ -80,7 +98,7 @@ class RecentCallsManager: NSObject {
     }
     
     func applicationDidEnterBackgroundNotification(notification: NSNotification) {
-        
+        self.saveContext()
     }
     
     //MARK:- Core Data stack

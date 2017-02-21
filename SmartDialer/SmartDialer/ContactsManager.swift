@@ -8,6 +8,8 @@
 
 import Contacts
 
+let kNumberOfDaysForCallToCount = 3
+
 class ContactsManager: NSObject {
     var contacts: [Contact] = []
     private var recentCallsManager = RecentCallsManager.sharedInstance
@@ -90,7 +92,24 @@ class ContactsManager: NSObject {
     }
     
     public func phoneNumberCalled(phoneNumber: String) {
-        self.recentCallsManager.incrementCounter(phoneNumber: phoneNumber)
+        let date = Date()
+        self.recentCallsManager.incrementCounterFor(phoneNumber: phoneNumber, withDate: date)
+        //update local arrays
+        for contact in self.contacts {
+            if contact.orderedPhoneNumbers.contains(where: { (_, number) -> Bool in
+                if number == phoneNumber {
+                    return true
+                } else {
+                    return false
+                }
+            }) {
+                contact.callCount += 1
+                contact.lastCallDate = date
+                
+                break
+            }
+        }
+        self.sortContacts()
     }
     
     //MARK:- Private
@@ -100,37 +119,76 @@ class ContactsManager: NSObject {
             return
         }
         
-        let keysToFetch = [
-            CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
-            CNContactPhoneNumbersKey as CNKeyDescriptor,
-            CNContactImageDataAvailableKey as CNKeyDescriptor,
-            CNContactThumbnailImageDataKey as CNKeyDescriptor]
-            as [CNKeyDescriptor]
-        
-        let contactStore = CNContactStore()
-        let containerIdentifier = contactStore.defaultContainerIdentifier()
-        let predicate = CNContact.predicateForContactsInContainer(withIdentifier: containerIdentifier)
-        
-        var cnContacts: [CNContact] = []
-        
-        do {
-            let containerResults = try contactStore.unifiedContacts(matching: predicate, keysToFetch: keysToFetch)
-            cnContacts.append(contentsOf: containerResults)
-        } catch {
-            return
+        DispatchQueue.global(qos: .background).sync {
+            let keysToFetch = [
+                CNContactFormatter.descriptorForRequiredKeys(for: .fullName),
+                CNContactPhoneNumbersKey as CNKeyDescriptor,
+                CNContactImageDataAvailableKey as CNKeyDescriptor,
+                CNContactThumbnailImageDataKey as CNKeyDescriptor]
+                as [CNKeyDescriptor]
+            
+            let contactStore = CNContactStore()
+            let containerIdentifier = contactStore.defaultContainerIdentifier()
+            let predicate = CNContact.predicateForContactsInContainer(withIdentifier: containerIdentifier)
+            
+            var cnContacts: [CNContact] = []
+            
+            do {
+                let containerResults = try contactStore.unifiedContacts(matching: predicate, keysToFetch: keysToFetch)
+                cnContacts.append(contentsOf: containerResults)
+            } catch {
+                return
+            }
+            
+            for cnContact in cnContacts {
+                let contact =  Contact(fromCNContact: cnContact)
+                var totalCallsCounter = 0
+                var phoneNumbersWithDate: [(label: String, number: String, date: Date?)] = []
+                
+                for (label, number) in contact.orderedPhoneNumbers {
+                    let information = self.recentCallsManager.callCountAndLastDateFor(phoneNumber: number)
+                    totalCallsCounter += information.callCount
+                    
+                    if let date = contact.lastCallDate {
+                        if date < information.lastCallDate! {
+                            contact.lastCallDate = information.lastCallDate
+                        }
+                    } else {
+                        contact.lastCallDate = information.lastCallDate
+                    }
+                    phoneNumbersWithDate.append((label, number, information.lastCallDate))
+                }
+                
+                contact.callCount = totalCallsCounter
+                contact.orderedPhoneNumbers = self.orderPhoneNumbersBasedOnDate(numbers: phoneNumbersWithDate)
+                
+                self.contacts.append(contact)
+            }
+            
+            self.sortContacts()
         }
-        
-        var contacts: [Contact] = []
-        
-        for cnContact in cnContacts {
-            let contact =  Contact(fromCNContact: cnContact)
-            contacts.append(contact)
-        }
-        
-        self.contacts = contacts.sorted(by: { (firstContact, secondContact) -> Bool in
-//            if firstContact.lastCallDate != secondContact.lastCallDate {    //double check this
-//                return firstContact.lastCallDate < secondContact.lastCallDate   //and this
-//            }
+    }
+    
+    private func sortContacts() {
+        self.contacts = self.contacts.sorted(by: { (firstContact, secondContact) -> Bool in
+            if firstContact.lastCallDate != nil || secondContact.lastCallDate != nil {
+                if let firstDate = firstContact.lastCallDate,
+                    let secondDate = secondContact.lastCallDate {
+                    
+                    if !self.isDate(date: firstDate, olderThanDays: kNumberOfDaysForCallToCount) {
+                        if !self.isDate(date: secondDate, olderThanDays: kNumberOfDaysForCallToCount) {
+                            //both dates are considered recent (under 7 days)
+                            return self.sortOrderBasedOnDate(date1: firstContact.lastCallDate, date2: secondContact.lastCallDate)
+                        } else {
+                            return true
+                        }
+                    } else {
+                        if !self.isDate(date: secondDate, olderThanDays: kNumberOfDaysForCallToCount) {
+                            return false
+                        }
+                    }
+                }
+            }
             if firstContact.callCount != secondContact.callCount {
                 return firstContact.callCount > secondContact.callCount
             }
@@ -146,6 +204,8 @@ class ContactsManager: NSObject {
             return firstContact.nickname < secondContact.nickname
         })
     }
+    
+    //MARK: Utils
     
     private func possibleMatchedCharactersForDigit(digit: Character) -> [Character] {
         switch digit {
@@ -175,14 +235,36 @@ class ContactsManager: NSObject {
     }
     
     private func sortOrderBasedOnDate(date1: Date?, date2: Date?) -> Bool {
-        
-        return true
+        if let secondDate = date2 {
+            if let firstDate = date1 {
+                return firstDate > secondDate
+            } else {
+                return false
+            }
+        } else {
+            return true
+        }
     }
     
-    private func isDateOlderThanAWeek(date: Date) -> Bool {
+    private func isDate(date: Date, olderThanDays days: Int) -> Bool {
+        let calendar = Calendar(identifier: .gregorian)
+        let finalDays = calendar.component(.day, from: date)
         
+        return finalDays <= days
+    }
+    
+    private func orderPhoneNumbersBasedOnDate(numbers: [(label: String, number: String, date: Date?)]) -> [(label: String, number: String)] {
+        let orderedResults = numbers.sorted { (first, second) -> Bool in
+            return !self.sortOrderBasedOnDate(date1: first.date, date2: second.date)
+        }
         
-        return true
+        var orderedNumbers: [(label: String, number: String)] = []
+        
+        for (label, number, _) in orderedResults {
+            orderedNumbers.append((label, number))
+        }
+        
+        return orderedNumbers
     }
 }
 

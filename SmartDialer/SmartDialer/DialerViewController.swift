@@ -69,8 +69,10 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         cell.contactImageView.image = contact.image ?? UIImage(named: kDefaultContactImageName)
         cell.nameLabel.text = contact.displayName
-        cell.phoneLabel.text = contact.phoneNumbers.first
-        cell.dateLabel.text = "15:24,\nToday"
+        if let phoneNumber = contact.orderedPhoneNumbers.first {
+            cell.phoneLabel.text = "\(phoneNumber.label): \(phoneNumber.number)"
+        }
+        cell.dateLabel.text = contact.lastCallDate?.description
         
         return cell
     }
@@ -83,7 +85,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //TODO: Choose which number to call
-        self.callNumber(phoneNumber: self.datasource[indexPath.row].phoneNumbers.first!)
+        self.callNumber(phoneNumber: self.datasource[indexPath.row].orderedPhoneNumbers.first!.number)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -143,7 +145,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if phoneNumber.characters.count > 0 {
             if self.datasource.count == 1 {
                 //TODO: choose appropriate phone number
-                if let contactNumber = self.datasource.first!.phoneNumbers.first {
+                if let (_, contactNumber) = self.datasource.first!.orderedPhoneNumbers.first {
                     self.callNumber(phoneNumber: contactNumber)
                 }
             } else {
