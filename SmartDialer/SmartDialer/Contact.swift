@@ -58,10 +58,9 @@ class Contact: NSObject {
         for phoneNumber in cnContact.phoneNumbers {
             let number = phoneNumber.value.stringValue
             
-            if let label = phoneNumber.label {
-                if number.characters.count > 0 {
-                    self.orderedPhoneNumbers.append((label, number))
-                }
+            if number.characters.count > 0 {
+                let label = CNLabeledValue<NSString>.localizedString(forLabel: phoneNumber.label ?? "")
+                self.orderedPhoneNumbers.append((label, number))
             }
         }
         

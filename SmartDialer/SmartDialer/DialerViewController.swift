@@ -69,10 +69,17 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         cell.contactImageView.image = contact.image ?? UIImage(named: kDefaultContactImageName)
         cell.nameLabel.text = contact.displayName
+        
         if let phoneNumber = contact.orderedPhoneNumbers.first {
-            cell.phoneLabel.text = "\(phoneNumber.label): \(phoneNumber.number)"
+            var text = ""
+            
+            if phoneNumber.label.characters.count > 0 {
+                text += phoneNumber.label + ": "
+            }
+            text += phoneNumber.number
+            cell.phoneLabel.text = text
         }
-        cell.dateLabel.text = contact.lastCallDate?.description
+        cell.dateLabel.text = contact.lastCallDate?.description //format and make it look better
         
         return cell
     }

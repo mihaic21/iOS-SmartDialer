@@ -158,7 +158,6 @@ class ContactsManager: NSObject {
                     }
                     phoneNumbersWithDate.append((label, number, information.lastCallDate))
                 }
-                
                 contact.callCount = totalCallsCounter
                 contact.orderedPhoneNumbers = self.orderPhoneNumbersBasedOnDate(numbers: phoneNumbersWithDate)
                 
