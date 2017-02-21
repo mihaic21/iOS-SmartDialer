@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D2AF67CE1E5B363B00950CA8 /* RecentCallsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2AF67CD1E5B363B00950CA8 /* RecentCallsManager.swift */; };
-		D2AF67F21E5B3D5F00950CA8 /* CallCounterModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2AF67F01E5B3D5F00950CA8 /* CallCounterModel.xcdatamodeld */; };
 		D2B28BE61DF2F64C009BA73B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B28BE51DF2F64C009BA73B /* AppDelegate.swift */; };
 		D2B28BE81DF2F64C009BA73B /* DialerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B28BE71DF2F64C009BA73B /* DialerViewController.swift */; };
 		D2B28BEB1DF2F64C009BA73B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D2B28BE91DF2F64C009BA73B /* Main.storyboard */; };
@@ -17,11 +16,11 @@
 		D2B28C011DF2FDC1009BA73B /* ContactsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B28C001DF2FDC1009BA73B /* ContactsManager.swift */; };
 		D2B28C051DF2FE10009BA73B /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B28C041DF2FE10009BA73B /* Contact.swift */; };
 		D2E478A31E5B1E06000EB5AB /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E478A21E5B1E06000EB5AB /* ContactsTableViewCell.swift */; };
+		D2EAD62C1E5C76C9000638C0 /* CallCounterModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2EAD62A1E5C76C9000638C0 /* CallCounterModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D2AF67CD1E5B363B00950CA8 /* RecentCallsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecentCallsManager.swift; sourceTree = "<group>"; };
-		D2AF67F11E5B3D5F00950CA8 /* CallCounterModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CallCounterModel.xcdatamodel; sourceTree = "<group>"; };
 		D2B28BE21DF2F64C009BA73B /* SmartDialer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartDialer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2B28BE51DF2F64C009BA73B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D2B28BE71DF2F64C009BA73B /* DialerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DialerViewController.swift; sourceTree = "<group>"; };
@@ -32,6 +31,7 @@
 		D2B28C001DF2FDC1009BA73B /* ContactsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsManager.swift; sourceTree = "<group>"; };
 		D2B28C041DF2FE10009BA73B /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		D2E478A21E5B1E06000EB5AB /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
+		D2EAD62B1E5C76C9000638C0 /* CallCounterModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CallCounterModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				D2B28C041DF2FE10009BA73B /* Contact.swift */,
-				D2AF67F01E5B3D5F00950CA8 /* CallCounterModel.xcdatamodeld */,
+				D2EAD62A1E5C76C9000638C0 /* CallCounterModel.xcdatamodeld */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -186,7 +186,7 @@
 			files = (
 				D2B28C051DF2FE10009BA73B /* Contact.swift in Sources */,
 				D2B28BE81DF2F64C009BA73B /* DialerViewController.swift in Sources */,
-				D2AF67F21E5B3D5F00950CA8 /* CallCounterModel.xcdatamodeld in Sources */,
+				D2EAD62C1E5C76C9000638C0 /* CallCounterModel.xcdatamodeld in Sources */,
 				D2AF67CE1E5B363B00950CA8 /* RecentCallsManager.swift in Sources */,
 				D2E478A31E5B1E06000EB5AB /* ContactsTableViewCell.swift in Sources */,
 				D2B28C011DF2FDC1009BA73B /* ContactsManager.swift in Sources */,
@@ -359,12 +359,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		D2AF67F01E5B3D5F00950CA8 /* CallCounterModel.xcdatamodeld */ = {
+		D2EAD62A1E5C76C9000638C0 /* CallCounterModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				D2AF67F11E5B3D5F00950CA8 /* CallCounterModel.xcdatamodel */,
+				D2EAD62B1E5C76C9000638C0 /* CallCounterModel.xcdatamodel */,
 			);
-			currentVersion = D2AF67F11E5B3D5F00950CA8 /* CallCounterModel.xcdatamodel */;
+			currentVersion = D2EAD62B1E5C76C9000638C0 /* CallCounterModel.xcdatamodel */;
 			path = CallCounterModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
