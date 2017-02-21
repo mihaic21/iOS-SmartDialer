@@ -31,7 +31,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForegroundNotification(notification:)), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification(notification:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -126,7 +126,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func willEnterForegroundNotification(notification: NSNotification) {
+    func applicationDidBecomeActiveNotification(notification: NSNotification) {
         self.inputTextField.text = ""
         self.datasource = self.contactsManager.contacts
         self.contactsTableView.reloadData()
