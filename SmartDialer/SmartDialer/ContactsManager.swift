@@ -9,10 +9,10 @@
 import Contacts
 
 class ContactsManager: NSObject {
-    static let sharedInstance = ContactsManager()
     var contacts: [Contact] = []
+    private var recentCallsManager = RecentCallsManager.sharedInstance
     
-    private override init() {
+    override init() {
         super.init()
         
         self.fetchAllContacts()
@@ -89,6 +89,10 @@ class ContactsManager: NSObject {
         return self.contacts
     }
     
+    public func phoneNumberCalled(phoneNumber: String) {
+        self.recentCallsManager.incrementCounter(phoneNumber: phoneNumber)
+    }
+    
     //MARK:- Private
     
     private func fetchAllContacts() {
@@ -124,12 +128,12 @@ class ContactsManager: NSObject {
         }
         
         self.contacts = contacts.sorted(by: { (firstContact, secondContact) -> Bool in
-            if firstContact.callCount != secondContact.callCount {
-                return firstContact.callCount > secondContact.callCount
-            }
 //            if firstContact.lastCallDate != secondContact.lastCallDate {    //double check this
 //                return firstContact.lastCallDate < secondContact.lastCallDate   //and this
 //            }
+            if firstContact.callCount != secondContact.callCount {
+                return firstContact.callCount > secondContact.callCount
+            }
             if firstContact.givenName != secondContact.givenName {
                 return firstContact.givenName < secondContact.givenName
             }
@@ -168,6 +172,17 @@ class ContactsManager: NSObject {
         default:
             return []
         }
+    }
+    
+    private func sortOrderBasedOnDate(date1: Date?, date2: Date?) -> Bool {
+        
+        return true
+    }
+    
+    private func isDateOlderThanAWeek(date: Date) -> Bool {
+        
+        
+        return true
     }
 }
 

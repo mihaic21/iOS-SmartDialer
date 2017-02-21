@@ -17,6 +17,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var inputTextField: UITextField!
     @IBOutlet weak var contactsTableView: UITableView!
     
+    private var contactsManager = ContactsManager()
     private var datasource: [Contact] = []
     
     override func viewDidLoad() {
@@ -49,14 +50,14 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             contactStore.requestAccess(for: .contacts, completionHandler: { (status, error) in
                 if status {
                     //update UI
-                    self.datasource = ContactsManager.sharedInstance.fetchAndGetContacts()
+                    self.datasource = self.contactsManager.fetchAndGetContacts()
                     DispatchQueue.main.async {
                         self.contactsTableView.reloadData()
                     }
                 }
             })
         } else {
-            self.datasource = ContactsManager.sharedInstance.contacts
+            self.datasource = self.contactsManager.contacts
         }
     }
     
@@ -94,7 +95,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBAction func textFieldTextDidChanged(_ sender: UITextField) {
         if let searchTerm = sender.text {
-            ContactsManager.sharedInstance.contactsWithMatchingString(searchTerm: searchTerm , completionBlock: { (contacts) in
+            self.contactsManager.contactsWithMatchingString(searchTerm: searchTerm , completionBlock: { (contacts) in
                 self.datasource = contacts
                 self.contactsTableView.reloadData()
                 self.contactsTableView.setContentOffset(CGPoint(), animated: true)
@@ -127,7 +128,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func willEnterForegroundNotification(notification: NSNotification) {
         self.inputTextField.text = ""
-        self.datasource = ContactsManager.sharedInstance.contacts
+        self.datasource = self.contactsManager.contacts
         self.contactsTableView.reloadData()
         self.contactsTableView.contentOffset = CGPoint()
     }
@@ -155,7 +156,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let phoneCallURL: URL = URL(string: "tel://\(self.stripPhoneNumber(phoneNumber: phoneNumber))") {
             if (UIApplication.shared.canOpenURL(phoneCallURL)) {
                 UIApplication.shared.open(phoneCallURL, options: [:], completionHandler: { (success) in
-                    RecentCallsManager.sharedInstance.incrementCounter(phoneNumber: phoneNumber)
+                    self.contactsManager.phoneNumberCalled(phoneNumber: phoneNumber)
                 });
             }
         }
