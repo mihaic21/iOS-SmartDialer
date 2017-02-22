@@ -141,7 +141,7 @@ class ContactsManager: NSObject {
             }
             
             for cnContact in cnContacts {
-                let contact =  Contact(fromCNContact: cnContact)
+                let contact = Contact(fromCNContact: cnContact)
                 var totalCallsCounter = 0
                 var phoneNumbersWithDate: [(label: String, number: String, date: Date?)] = []
                 
@@ -150,8 +150,10 @@ class ContactsManager: NSObject {
                     totalCallsCounter += information.callCount
                     
                     if let date = contact.lastCallDate {
-                        if date < information.lastCallDate! {
-                            contact.lastCallDate = information.lastCallDate
+                        if let lastCallDate = information.lastCallDate {
+                            if date < lastCallDate {
+                                contact.lastCallDate = lastCallDate
+                            }
                         }
                     } else {
                         contact.lastCallDate = information.lastCallDate
