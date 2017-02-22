@@ -17,6 +17,7 @@
 		D2B28C051DF2FE10009BA73B /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B28C041DF2FE10009BA73B /* Contact.swift */; };
 		D2E478A31E5B1E06000EB5AB /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E478A21E5B1E06000EB5AB /* ContactsTableViewCell.swift */; };
 		D2EAD62C1E5C76C9000638C0 /* CallCounterModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2EAD62A1E5C76C9000638C0 /* CallCounterModel.xcdatamodeld */; };
+		D2EAD6341E5CB885000638C0 /* Date+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EAD6331E5CB885000638C0 /* Date+Additions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		D2B28C041DF2FE10009BA73B /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		D2E478A21E5B1E06000EB5AB /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
 		D2EAD62B1E5C76C9000638C0 /* CallCounterModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CallCounterModel.xcdatamodel; sourceTree = "<group>"; };
+		D2EAD6331E5CB885000638C0 /* Date+Additions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Additions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 			children = (
 				D2B28C041DF2FE10009BA73B /* Contact.swift */,
 				D2EAD62A1E5C76C9000638C0 /* CallCounterModel.xcdatamodeld */,
+				D2EAD6331E5CB885000638C0 /* Date+Additions.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 				D2E478A31E5B1E06000EB5AB /* ContactsTableViewCell.swift in Sources */,
 				D2B28C011DF2FDC1009BA73B /* ContactsManager.swift in Sources */,
 				D2B28BE61DF2F64C009BA73B /* AppDelegate.swift in Sources */,
+				D2EAD6341E5CB885000638C0 /* Date+Additions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

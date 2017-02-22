@@ -176,15 +176,15 @@ class ContactsManager: NSObject {
                 if let firstDate = firstContact.lastCallDate,
                     let secondDate = secondContact.lastCallDate {
                     
-                    if !self.isDate(date: firstDate, olderThanDays: kNumberOfDaysForCallToCount) {
-                        if !self.isDate(date: secondDate, olderThanDays: kNumberOfDaysForCallToCount) {
+                    if !firstDate.isMoreThanDaysAgo(days: kNumberOfDaysForCallToCount) {
+                        if !secondDate.isMoreThanDaysAgo(days: kNumberOfDaysForCallToCount) {
                             //both dates are considered recent (under 7 days)
                             return self.sortOrderBasedOnDate(date1: firstContact.lastCallDate, date2: secondContact.lastCallDate)
                         } else {
                             return true
                         }
                     } else {
-                        if !self.isDate(date: secondDate, olderThanDays: kNumberOfDaysForCallToCount) {
+                        if !secondDate.isMoreThanDaysAgo(days: kNumberOfDaysForCallToCount) {
                             return false
                         }
                     }
@@ -245,13 +245,6 @@ class ContactsManager: NSObject {
         } else {
             return true
         }
-    }
-    
-    private func isDate(date: Date, olderThanDays days: Int) -> Bool {
-        let calendar = Calendar(identifier: .gregorian)
-        let finalDays = calendar.component(.day, from: date)
-        
-        return finalDays <= days
     }
     
     private func orderPhoneNumbersBasedOnDate(numbers: [(label: String, number: String, date: Date?)]) -> [(label: String, number: String)] {

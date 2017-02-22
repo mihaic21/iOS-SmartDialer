@@ -79,7 +79,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             text += phoneNumber.number
             cell.phoneLabel.text = text
         }
-        cell.dateLabel.text = contact.lastCallDate?.description //format and make it look better
+        cell.dateLabel.text = contact.lastCallDate?.formatted()
         
         return cell
     }
@@ -162,10 +162,12 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func callNumber(phoneNumber: String) {
+        self.contactsManager.phoneNumberCalled(phoneNumber: phoneNumber)
+        
         if let phoneCallURL: URL = URL(string: "tel://\(self.stripPhoneNumber(phoneNumber: phoneNumber))") {
             if (UIApplication.shared.canOpenURL(phoneCallURL)) {
                 UIApplication.shared.open(phoneCallURL, options: [:], completionHandler: { (success) in
-                    self.contactsManager.phoneNumberCalled(phoneNumber: phoneNumber)
+                    
                 });
             }
         }
