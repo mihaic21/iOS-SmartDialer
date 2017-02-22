@@ -88,6 +88,26 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return self.datasource.count
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        var rowActions: [UITableViewRowAction] = []
+        var rowStyleAlternator = true
+        
+        for (label, number) in self.datasource[indexPath.row].orderedPhoneNumbers {
+            let actionTitle = label.characters.count > 0 ? label : number
+            let rowAction = UITableViewRowAction(style: .normal, title: actionTitle, handler: { (_, _) in
+                self.callNumber(phoneNumber: number)
+            })
+            if rowStyleAlternator {
+                rowAction.backgroundEffect = UIVisualEffect()
+            }
+            rowStyleAlternator = !rowStyleAlternator
+            
+            rowActions.append(rowAction)
+        }
+        
+        return rowActions
+    }
+    
     //MARK:- UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
