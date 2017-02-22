@@ -157,9 +157,10 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func applicationDidBecomeActiveNotification(notification: NSNotification) {
         self.inputTextField.text = ""
+        self.inputTextField.becomeFirstResponder()
         self.datasource = self.contactsManager.contacts
         self.contactsTableView.reloadData()
-        self.contactsTableView.contentOffset = CGPoint()
+        self.contactsTableView.setContentOffset(CGPoint(), animated: true)
     }
     
     //MARK:- Actions
