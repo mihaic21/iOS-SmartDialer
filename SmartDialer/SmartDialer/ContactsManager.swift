@@ -8,8 +8,6 @@
 
 import Contacts
 
-let kNumberOfDaysForCallToCount = 3
-
 class ContactsManager: NSObject {
     var contacts: [Contact] = []
     private var recentCallsManager = RecentCallsManager.sharedInstance
@@ -176,15 +174,15 @@ class ContactsManager: NSObject {
                 if let firstDate = firstContact.lastCallDate,
                     let secondDate = secondContact.lastCallDate {
                     
-                    if !firstDate.isMoreThanDaysAgo(days: kNumberOfDaysForCallToCount) {
-                        if !secondDate.isMoreThanDaysAgo(days: kNumberOfDaysForCallToCount) {
-                            //both dates are considered recent (under kNumberOfDaysForCallToCount days)
+                    if firstDate.isRecent() {
+                        if secondDate.isRecent() {
+                            //both dates are considered recent
                             return self.sortOrderBasedOnDate(date1: firstContact.lastCallDate, date2: secondContact.lastCallDate)
                         } else {
                             return true
                         }
                     } else {
-                        if !secondDate.isMoreThanDaysAgo(days: kNumberOfDaysForCallToCount) {
+                        if secondDate.isRecent() {
                             return false
                         }
                     }

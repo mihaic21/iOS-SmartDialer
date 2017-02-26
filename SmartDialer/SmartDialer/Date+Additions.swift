@@ -8,6 +8,9 @@
 
 import Foundation
 
+let kNumberOfDaysForCallToBeRecent = 3
+let kNumberOfDaysInAWeek = 7
+
 extension Date {
     public func formatted() -> String {
         if self.isToday() {
@@ -20,7 +23,7 @@ extension Date {
             dateFormatter.dateFormat = "HH:mm"
             
             return dateFormatter.string(from: self) + ",\nYesterday"
-        } else if !self.isMoreThanDaysAgo(days: kNumberOfDaysForCallToCount) {
+        } else if self.isThisWeek() {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm,\nEEEE"
             
@@ -41,7 +44,18 @@ extension Date {
         return Calendar.current.isDateInYesterday(self)
     }
     
-    public func isMoreThanDaysAgo(days: Int) -> Bool {
+    /// Decides whether or not the date is considered recent. A date is recent if the number of days that have passed since is less than
+    ///
+    /// - Returns: true is date is recent, false otherwise
+    public func isRecent() -> Bool {
+        return !self.isMoreThanDaysAgo(days: kNumberOfDaysForCallToBeRecent)
+    }
+    
+    public func isThisWeek() -> Bool {
+        return !self.isMoreThanDaysAgo(days: kNumberOfDaysInAWeek)
+    }
+    
+    private func isMoreThanDaysAgo(days: Int) -> Bool {
         let components = Calendar.current.dateComponents([.day], from: self, to: Date())
         
         return components.day! >= days
