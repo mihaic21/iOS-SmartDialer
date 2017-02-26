@@ -14,7 +14,7 @@ extension Date {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm"
             
-            return dateFormatter.string(from: self) + ",\nToday"
+            return dateFormatter.string(from: self)
         } else if self.isYesterday() {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm"
@@ -22,7 +22,7 @@ extension Date {
             return dateFormatter.string(from: self) + ",\nYesterday"
         } else if !self.isMoreThanDaysAgo(days: kNumberOfDaysForCallToCount) {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm, EEEE"
+            dateFormatter.dateFormat = "HH:mm,\nEEEE"
             
             return dateFormatter.string(from: self)
         } else {
