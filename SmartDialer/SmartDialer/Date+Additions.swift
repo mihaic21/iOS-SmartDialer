@@ -42,9 +42,8 @@ extension Date {
     }
     
     public func isMoreThanDaysAgo(days: Int) -> Bool {
-        let calendar = Calendar.current
-        let finalDays = calendar.component(.day, from: self)
+        let components = Calendar.current.dateComponents([.day], from: self, to: Date())
         
-        return finalDays <= days
+        return components.day! >= days
     }
 }

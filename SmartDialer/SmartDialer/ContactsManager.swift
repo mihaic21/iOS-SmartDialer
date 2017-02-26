@@ -178,7 +178,7 @@ class ContactsManager: NSObject {
                     
                     if !firstDate.isMoreThanDaysAgo(days: kNumberOfDaysForCallToCount) {
                         if !secondDate.isMoreThanDaysAgo(days: kNumberOfDaysForCallToCount) {
-                            //both dates are considered recent (under 7 days)
+                            //both dates are considered recent (under kNumberOfDaysForCallToCount days)
                             return self.sortOrderBasedOnDate(date1: firstContact.lastCallDate, date2: secondContact.lastCallDate)
                         } else {
                             return true
