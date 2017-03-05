@@ -10,6 +10,7 @@ import Foundation
 
 let kNumberOfDaysForCallToBeRecent = 5
 let kNumberOfDaysForCallToBeThisWeek = 6
+let kNumberOfDaysInAnYear = 365
 
 extension Date {
     public func formatted() -> String {
@@ -22,15 +23,20 @@ extension Date {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm"
             
-            return dateFormatter.string(from: self) + ",\nYesterday"
+            return dateFormatter.string(from: self) + "\nYesterday"
         } else if self.isThisWeek() {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm,\nEEEE"
+            dateFormatter.dateFormat = "HH:mm\nEEEE"
+            
+            return dateFormatter.string(from: self)
+        } else  if self.isThisYear() {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm\nEE, d MMM"
             
             return dateFormatter.string(from: self)
         } else {
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm,\ndd MMM yyyy"
+            dateFormatter.dateFormat = "HH:mm\nd/M/yyyy"
             
             return dateFormatter.string(from: self)
         }
@@ -53,6 +59,10 @@ extension Date {
     
     public func isThisWeek() -> Bool {
         return !self.isMoreThanDaysAgo(days: kNumberOfDaysForCallToBeThisWeek)
+    }
+    
+    public func isThisYear() -> Bool {
+        return !self.isMoreThanDaysAgo(days: kNumberOfDaysInAnYear)
     }
     
     private func isMoreThanDaysAgo(days: Int) -> Bool {
