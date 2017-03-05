@@ -8,8 +8,8 @@
 
 import Foundation
 
-let kNumberOfDaysForCallToBeRecent = 3
-let kNumberOfDaysInAWeek = 7
+let kNumberOfDaysForCallToBeRecent = 5
+let kNumberOfDaysForCallToBeThisWeek = 6
 
 extension Date {
     public func formatted() -> String {
@@ -52,7 +52,7 @@ extension Date {
     }
     
     public func isThisWeek() -> Bool {
-        return !self.isMoreThanDaysAgo(days: kNumberOfDaysInAWeek)
+        return !self.isMoreThanDaysAgo(days: kNumberOfDaysForCallToBeThisWeek)
     }
     
     private func isMoreThanDaysAgo(days: Int) -> Bool {
