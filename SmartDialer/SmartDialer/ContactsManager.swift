@@ -240,14 +240,16 @@ class ContactsManager: NSObject {
             } else {
                 return false
             }
-        } else {
+        } else if date1 != nil {
             return true
+        } else {
+            return false
         }
     }
     
     private func orderPhoneNumbersBasedOnDate(numbers: [(label: String, number: String, date: Date?)]) -> [(label: String, number: String)] {
         let orderedResults = numbers.sorted { (first, second) -> Bool in
-            return !self.sortOrderBasedOnDate(date1: first.date, date2: second.date)
+            return self.sortOrderBasedOnDate(date1: first.date, date2: second.date)
         }
         
         var orderedNumbers: [(label: String, number: String)] = []
