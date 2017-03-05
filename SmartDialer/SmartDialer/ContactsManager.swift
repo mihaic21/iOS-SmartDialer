@@ -169,25 +169,26 @@ class ContactsManager: NSObject {
     }
     
     private func sortContacts() {
-        self.contacts = self.contacts.sorted(by: { (firstContact, secondContact) -> Bool in
-            if firstContact.lastCallDate != nil || secondContact.lastCallDate != nil {
-                if let firstDate = firstContact.lastCallDate,
-                    let secondDate = secondContact.lastCallDate {
-                    
-                    if firstDate.isRecent() {
+        self.contacts = self.contacts.sorted(by: { (firstContact, secondContact) -> Bool in  
+            if let firstDate = firstContact.lastCallDate {
+                if firstDate.isRecent() {
+                    if let secondDate = secondContact.lastCallDate {
                         if secondDate.isRecent() {
-                            //both dates are considered recent
-                            return self.sortOrderBasedOnDate(date1: firstContact.lastCallDate, date2: secondContact.lastCallDate)
+                            return self.sortOrderBasedOnDate(date1: firstDate, date2: secondDate)
                         } else {
                             return true
                         }
                     } else {
-                        if secondDate.isRecent() {
-                            return false
-                        }
+                        return true
                     }
                 }
             }
+            if let secondDate = secondContact.lastCallDate {
+                if secondDate.isRecent() {
+                    return false
+                }
+            }
+            
             if firstContact.callCount != secondContact.callCount {
                 return firstContact.callCount > secondContact.callCount
             }
