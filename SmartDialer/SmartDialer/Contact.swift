@@ -35,7 +35,7 @@ class Contact: NSObject {
             
             if self.nickname.characters.count > 0 {
                 finalName += "\"\(self.nickname)\""
-            } else {
+            } else if finalName.characters.count > 0 {
                 finalName.characters.removeLast()   //last character is a white space
             }
             
