@@ -32,7 +32,7 @@ class ContactsManager: NSObject {
             
             var regex = "^"
             
-            for digit in searchTerm.characters {
+            for digit in searchTerm {
                 let matches = self.possibleMatchedCharactersForDigit(digit: digit)
                 
                 if matches.count > 0 {

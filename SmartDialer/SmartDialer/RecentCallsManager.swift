@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import CoreData
 
 /// This class should persistently keep track of all the calls initiated from within the app and provide a total number of calls for each individual phone number.
@@ -35,7 +36,7 @@ class RecentCallsManager: NSObject {
             for callCounter in self.callCounters {
                 if callCounter.phoneNumber == phoneNumber {
                     callCounter.callCount += 1
-                    callCounter.lastCallDate = date as NSDate?
+                    callCounter.lastCallDate = date
                     
                     alreadyExists = true
                     break
@@ -47,7 +48,7 @@ class RecentCallsManager: NSObject {
                 let callCounter = CallCounter(context: context)
                 callCounter.phoneNumber = phoneNumber
                 callCounter.callCount = 1
-                callCounter.lastCallDate = date as NSDate?
+                callCounter.lastCallDate = date
                 context.insert(callCounter)
             }
             
@@ -87,17 +88,17 @@ class RecentCallsManager: NSObject {
     }
     
     private func addObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillTerminateNotification(notification:)), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackgroundNotification(notification:)), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillTerminateNotification(notification:)), name: UIApplication.willTerminateNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackgroundNotification(notification:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
     //MARK:- Notifications
     
-    func applicationWillTerminateNotification(notification: NSNotification) {
+    @objc func applicationWillTerminateNotification(notification: NSNotification) {
         self.saveContext()
     }
     
-    func applicationDidEnterBackgroundNotification(notification: NSNotification) {
+    @objc func applicationDidEnterBackgroundNotification(notification: NSNotification) {
         self.saveContext()
     }
     

@@ -30,8 +30,8 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification(notification:)), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardNotification(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActiveNotification(notification:)), name: UIApplication.didBecomeActiveNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -73,7 +73,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let phoneNumber = contact.orderedPhoneNumbers.first {
             var text = ""
             
-            if phoneNumber.label.characters.count > 0 {
+            if phoneNumber.label.count > 0 {
                 text += phoneNumber.label + ": "
             }
             text += phoneNumber.number
@@ -93,7 +93,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var rowStyleAlternator = true
         
         for (label, number) in self.datasource[indexPath.row].orderedPhoneNumbers {
-            let actionTitle = label.characters.count > 0 ? label : number
+            let actionTitle = label.count > 0 ? label : number
             let rowAction = UITableViewRowAction(style: .normal, title: actionTitle, handler: { (_, _) in
                 self.callNumber(phoneNumber: number)
             })
@@ -134,13 +134,13 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     //MARK:- Notifications
     
-    func keyboardNotification(notification: NSNotification) {
+    @objc func keyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {
-            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
-            let duration: TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
-            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
-            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
-            let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+            let endFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let duration: TimeInterval = (userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+            let animationCurveRawNSN = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber
+            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIView.AnimationOptions.curveEaseInOut.rawValue
+            let animationCurve: UIView.AnimationOptions = UIView.AnimationOptions(rawValue: animationCurveRaw)
             
             if (endFrame?.origin.y)! >= UIScreen.main.bounds.size.height {
                 self.inputContainerBottomDistanceConstraint.constant = 0
@@ -155,7 +155,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    func applicationDidBecomeActiveNotification(notification: NSNotification) {
+    @objc func applicationDidBecomeActiveNotification(notification: NSNotification) {
         self.inputTextField.text = ""
         self.inputTextField.becomeFirstResponder()
         self.datasource = self.contactsManager.contacts
@@ -170,7 +170,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         
-        if phoneNumber.characters.count > 0 {
+        if phoneNumber.count > 0 {
             if self.datasource.count == 1 {
                 //TODO: choose appropriate phone number
                 if let (_, contactNumber) = self.datasource.first!.orderedPhoneNumbers.first {
@@ -202,7 +202,7 @@ class DialerViewController: UIViewController, UITableViewDelegate, UITableViewDa
         do {
             let regex = try NSRegularExpression(pattern: pattern, options: [])
             
-            return regex.stringByReplacingMatches(in: phoneNumber, options: .withTransparentBounds, range: NSRange(location: 0, length: phoneNumber.characters.count), withTemplate: "")
+            return regex.stringByReplacingMatches(in: phoneNumber, options: .withTransparentBounds, range: NSRange(location: 0, length: phoneNumber.count), withTemplate: "")
         } catch {
             return ""
         }

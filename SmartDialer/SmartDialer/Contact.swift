@@ -28,15 +28,15 @@ class Contact: NSObject {
             var finalName = ""
             
             for name in names {
-                if name.characters.count > 0 {
+                if name.count > 0 {
                     finalName += "\(name) "
                 }
             }
             
-            if self.nickname.characters.count > 0 {
+            if self.nickname.count > 0 {
                 finalName += "\"\(self.nickname)\""
-            } else if finalName.characters.count > 0 {
-                finalName.characters.removeLast()   //last character is a white space
+            } else if finalName.count > 0 {
+                finalName.removeLast()   //last character is a white space
             }
             
             return finalName
@@ -58,7 +58,7 @@ class Contact: NSObject {
         for phoneNumber in cnContact.phoneNumbers {
             let number = phoneNumber.value.stringValue
             
-            if number.characters.count > 0 {
+            if number.count > 0 {
                 let label = CNLabeledValue<NSString>.localizedString(forLabel: phoneNumber.label ?? "")
                 self.orderedPhoneNumbers.append((label, number))
             }

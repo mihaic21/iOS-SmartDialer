@@ -41,6 +41,12 @@
       "idiom" : "iphone",
       "filename" : "phone_icon_180.png",
       "scale" : "3x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "Big Icon.png",
+      "scale" : "1x"
     }
   ],
   "info" : {
