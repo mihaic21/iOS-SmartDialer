@@ -212,19 +212,19 @@ class ContactsManager: NSObject {
         case "1":
             return ["1"]
         case "2":
-            return ["2", "a", "A", "b", "B", "c", "C"]
+            return ["2", "a", "A", "â", "Â", "ă", "Ă", "b", "B", "c", "C"]
         case "3":
             return ["3", "d", "D", "e", "E", "f", "F"]
         case "4":
-            return ["4", "g", "G", "h", "H", "i", "I"]
+            return ["4", "g", "G", "h", "H", "i", "I", "î", "Î"]
         case "5":
             return ["5", "j", "J", "k", "K", "l", "L"]
         case "6":
             return ["6", "m", "M", "n", "N", "o", "O"]
         case "7":
-            return ["7", "p", "P", "q", "Q", "r", "R", "s", "S"]
+            return ["7", "p", "P", "q", "Q", "r", "R", "s", "S", "ș", "Ș"]
         case "8":
-            return ["8", "t", "T", "u", "U", "v", "V"]
+            return ["8", "t", "T", "ț", "Ț", "u", "U", "v", "V"]
         case "9":
             return ["9", "w", "W", "x", "X", "y", "Y", "z", "Z"]
         case "0":
